@@ -31,8 +31,8 @@ SOPHUS_FUNC bool isScaledOrthogonalAndPositive(Eigen::MatrixBase<D> const& sR) {
   using Scalar = typename D::Scalar;
   static int const N = D::RowsAtCompileTime;
   static int const M = D::ColsAtCompileTime;
-  using std::pow;
-  using std::sqrt;
+  using Eigen::numext::pow;
+  using Eigen::numext::sqrt;
 
   Scalar det = sR.determinant();
 

@@ -152,7 +152,7 @@ class SO2Base {
   // of SO(2).
   //
   SOPHUS_FUNC Scalar log() const {
-    using std::atan2;
+    using details::atan2;
     return atan2(unit_complex().y(), unit_complex().x());
   }
 
@@ -162,7 +162,7 @@ class SO2Base {
   // this function directly.
   //
   SOPHUS_FUNC void normalize() {
-    using std::sqrt;
+    using Eigen::numext::sqrt;
     Scalar length = sqrt(unit_complex().x() * unit_complex().x() +
                          unit_complex().y() * unit_complex().y());
     SOPHUS_ENSURE(length >= Constants<Scalar>::epsilon(),
@@ -417,8 +417,8 @@ class SO2 : public SO2Base<SO2<Scalar_, Options>> {
   // hat()-operator of SO(2).
   //
   SOPHUS_FUNC static SO2<Scalar> exp(Tangent const& theta) {
-    using std::cos;
-    using std::sin;
+    using Eigen::numext::cos;
+    using Eigen::numext::sin;
     return SO2<Scalar>(cos(theta), sin(theta));
   }
 
@@ -426,8 +426,8 @@ class SO2 : public SO2Base<SO2<Scalar_, Options>> {
   //
   SOPHUS_FUNC static Sophus::Matrix<Scalar, num_parameters, DoF> Dx_exp_x(
       Tangent const& theta) {
-    using std::cos;
-    using std::sin;
+    using Eigen::numext::cos;
+    using Eigen::numext::sin;
     return Sophus::Matrix<Scalar, num_parameters, DoF>(-sin(theta), cos(theta));
   }
 
@@ -517,7 +517,7 @@ class SO2 : public SO2Base<SO2<Scalar_, Options>> {
   //                |  a  0 |
   //
   SOPHUS_FUNC static Tangent vee(Transformation const& Omega) {
-    using std::abs;
+    using Eigen::numext::abs;
     return Omega(1, 0);
   }
 

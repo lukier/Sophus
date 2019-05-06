@@ -154,7 +154,7 @@ class SE2Base {
   // of SE(2).
   //
   SOPHUS_FUNC Tangent log() const {
-    using std::abs;
+    using Eigen::numext::abs;
 
     Tangent upsilon_theta;
     Scalar theta = so2().log();
@@ -473,10 +473,10 @@ class SE2 : public SE2Base<SE2<Scalar_, Options>> {
   //
   SOPHUS_FUNC static Sophus::Matrix<Scalar, num_parameters, DoF> Dx_exp_x(
       Tangent const& upsilon_theta) {
-    using std::abs;
-    using std::cos;
-    using std::pow;
-    using std::sin;
+    using Eigen::numext::abs;
+    using Eigen::numext::cos;
+    using Eigen::numext::pow;
+    using Eigen::numext::sin;
     Sophus::Matrix<Scalar, num_parameters, DoF> J;
     Sophus::Vector<Scalar, 2> upsilon = upsilon_theta.template head<2>();
     Scalar theta = upsilon_theta[2];
@@ -501,7 +501,7 @@ class SE2 : public SE2Base<SE2<Scalar_, Options>> {
     Scalar const c4 = -c1 + Scalar(1);
     Scalar const c5 = c2 * c4;
     Scalar const c6 = c1 * c2;
-    Scalar const c7 = pow(theta, -2);
+    Scalar const c7 = pow(theta, Scalar(-2));
     Scalar const c8 = c0 * c7;
     Scalar const c9 = c4 * c7;
 
@@ -563,7 +563,7 @@ class SE2 : public SE2Base<SE2<Scalar_, Options>> {
     SO2<Scalar> so2 = SO2<Scalar>::exp(theta);
     Scalar sin_theta_by_theta;
     Scalar one_minus_cos_theta_by_theta;
-    using std::abs;
+    using Eigen::numext::abs;
 
     if (abs(theta) < Constants<Scalar>::epsilon()) {
       Scalar theta_sq = theta * theta;

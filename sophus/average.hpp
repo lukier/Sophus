@@ -163,8 +163,8 @@ average(SequenceContainer const& foo_Ts_bar) {
 
   SOPHUS_ENSURE(N >= 1, "N must be >= 1.");
   Scalar scale_sum = Scalar(0);
-  using std::exp;
-  using std::log;
+  using Eigen::numext::exp;
+  using Eigen::numext::log;
   for (RxSO3<Scalar> const& foo_T_bar : foo_Ts_bar) {
     scale_sum += log(foo_T_bar.scale());
   }

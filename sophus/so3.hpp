@@ -238,9 +238,9 @@ class SO3Base {
   //
   SOPHUS_FUNC TangentAndTheta logAndTheta() const {
     TangentAndTheta J;
-    using std::abs;
-    using std::atan;
-    using std::sqrt;
+    using Eigen::numext::abs;
+    using Eigen::numext::atan;
+    using Eigen::numext::sqrt;
     Scalar squared_n = unit_quaternion().vec().squaredNorm();
     Scalar n = sqrt(squared_n);
     Scalar w = unit_quaternion().w();
@@ -490,10 +490,10 @@ class SO3 : public SO3Base<SO3<Scalar_, Options>> {
   //
   SOPHUS_FUNC static Sophus::Matrix<Scalar, num_parameters, DoF> Dx_exp_x(
       Tangent const& omega) {
-    using std::cos;
-    using std::exp;
-    using std::sin;
-    using std::sqrt;
+    using Eigen::numext::cos;
+    using Eigen::numext::exp;
+    using Eigen::numext::sin;
+    using Eigen::numext::sqrt;
     Scalar const c0 = omega[0] * omega[0];
     Scalar const c1 = omega[1] * omega[1];
     Scalar const c2 = omega[2] * omega[2];
@@ -577,10 +577,10 @@ class SO3 : public SO3Base<SO3<Scalar_, Options>> {
   SOPHUS_FUNC static SO3<Scalar> expAndTheta(Tangent const& omega,
                                              Scalar* theta) {
     SOPHUS_ENSURE(theta != nullptr, "must not be nullptr.");
-    using std::abs;
-    using std::cos;
-    using std::sin;
-    using std::sqrt;
+    using Eigen::numext::abs;
+    using Eigen::numext::cos;
+    using Eigen::numext::sin;
+    using Eigen::numext::sqrt;
     Scalar theta_sq = omega.squaredNorm();
     *theta = sqrt(theta_sq);
     Scalar half_theta = Scalar(0.5) * (*theta);

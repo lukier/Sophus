@@ -321,7 +321,7 @@ class LieGroupTests {
 
   bool interpolateAndMeanTest() {
     bool passed = true;
-    using std::sqrt;
+    using Eigen::numext::sqrt;
     Scalar const eps = Constants<Scalar>::epsilon();
     Scalar const sqrt_eps = sqrt(eps);
     // TODO: Improve accuracy of ``interpolate`` (and hence ``exp`` and ``log``)

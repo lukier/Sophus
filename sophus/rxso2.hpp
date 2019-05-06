@@ -160,7 +160,7 @@ class RxSO2Base {
   // of RxSO2.
   //
   SOPHUS_FUNC Tangent log() const {
-    using std::log;
+    using Eigen::numext::log;
     Tangent theta_sigma;
     theta_sigma[1] = log(scale());
     theta_sigma[0] = SO2<Scalar>(complex()).log();
@@ -330,7 +330,7 @@ class RxSO2Base {
   // Sets scale and leaves rotation as is.
   //
   SOPHUS_FUNC void setScale(Scalar const& scale) {
-    using std::sqrt;
+    using Eigen::numext::sqrt;
     complex_nonconst().normalize();
     complex_nonconst() *= scale;
   }
@@ -349,7 +349,7 @@ class RxSO2Base {
   // Setter of SO(2) rotations, leaves scale as is.
   //
   SOPHUS_FUNC void setSO2(SO2<Scalar> const& so2) {
-    using std::sqrt;
+    using Eigen::numext::sqrt;
     Scalar saved_scale = scale();
     complex_nonconst() = so2.unit_complex();
     complex_nonconst() *= saved_scale;
@@ -462,7 +462,7 @@ class RxSO2 : public RxSO2Base<RxSO2<Scalar_, Options>> {
   // hat()-operator of RSO2.
   //
   SOPHUS_FUNC static RxSO2<Scalar> exp(Tangent const& a) {
-    using std::exp;
+    using Eigen::numext::exp;
 
     Scalar const theta = a[0];
     Scalar const sigma = a[1];
@@ -539,7 +539,7 @@ class RxSO2 : public RxSO2Base<RxSO2<Scalar_, Options>> {
   template <class UniformRandomBitGenerator>
   static RxSO2 sampleUniform(UniformRandomBitGenerator& generator) {
     std::uniform_real_distribution<Scalar> uniform(Scalar(-1), Scalar(1));
-    using std::exp2;
+    using details::exp2;
     return RxSO2(exp2(uniform(generator)),
                  SO2<Scalar>::sampleUniform(generator));
   }
@@ -557,7 +557,7 @@ class RxSO2 : public RxSO2Base<RxSO2<Scalar_, Options>> {
   //                |  x  d | .
   //
   SOPHUS_FUNC static Tangent vee(Transformation const& Omega) {
-    using std::abs;
+    using Eigen::numext::abs;
     return Tangent(Omega(1, 0), Omega(0, 0));
   }
 

@@ -152,6 +152,45 @@ class Transpose<Matrix<Scalar, M, N>> {
     return s.transpose();
   }
 };
+
+// stuff missing from Eigen::numext
+template<typename T>
+EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE
+T atan2(const T& y, const T& x) {
+  EIGEN_USING_STD_MATH(atan2);
+  return atan2(y,x);
+}
+
+#if defined(__SYCL_DEVICE_ONLY__)
+SYCL_SPECIALIZE_FLOATING_TYPES_BINARY(atan2, atan2)
+#endif // defined(__SYCL_DEVICE_ONLY__)
+
+#if defined(EIGEN_GPUCC)
+template<> EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE
+float atan2(const float& y, const float& x) { return ::atan2f(y,x); }
+
+template<> EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE
+double atan2(const double& y. const double& x) { return ::atan2(y,x); }
+#endif
+
+template<typename T>
+EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE
+T exp2(const T &x) {
+  EIGEN_USING_STD_MATH(exp2);
+  return exp2(x);
+}
+
+#if defined(__SYCL_DEVICE_ONLY__)
+SYCL_SPECIALIZE_FLOATING_TYPES_UNARY(exp2, exp2)
+#endif // defined(__SYCL_DEVICE_ONLY__)
+
+#if defined(EIGEN_GPUCC)
+template<> EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE
+float exp2(const float &x) { return ::exp2f(x); }
+
+template<> EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE
+double exp2(const double &x) { return ::exp2(x); }
+#endif
 }  // namespace details
 
 // Returns maximum metric between two points ``p0`` and ``p1``, with ``p``

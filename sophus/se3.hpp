@@ -223,9 +223,9 @@ class SE3Base {
     // logarithms of orthogonal matrices", IJRA 2002.
     // https://pdfs.semanticscholar.org/cfe3/e4b39de63c8cabd89bf3feff7f5449fc981d.pdf
     // (Sec. 6., pp. 8)
-    using std::abs;
-    using std::cos;
-    using std::sin;
+    using Eigen::numext::abs;
+    using Eigen::numext::cos;
+    using Eigen::numext::sin;
     Tangent upsilon_omega;
     auto omega_and_theta = so3().logAndTheta();
     Scalar theta = omega_and_theta.theta;
@@ -540,10 +540,10 @@ class SE3 : public SE3Base<SE3<Scalar_, Options>> {
   //
   SOPHUS_FUNC static Sophus::Matrix<Scalar, num_parameters, DoF> Dx_exp_x(
       Tangent const& upsilon_omega) {
-    using std::cos;
-    using std::pow;
-    using std::sin;
-    using std::sqrt;
+    using Eigen::numext::cos;
+    using Eigen::numext::pow;
+    using Eigen::numext::sin;
+    using Eigen::numext::sqrt;
     Sophus::Matrix<Scalar, num_parameters, DoF> J;
     Sophus::Vector<Scalar, 3> upsilon = upsilon_omega.template head<3>();
     Sophus::Vector<Scalar, 3> omega = upsilon_omega.template tail<3>();
@@ -578,7 +578,7 @@ class SE3 : public SE3Base<SE3<Scalar_, Options>> {
     Scalar const c6 = Scalar(0.5) * c4;
     Scalar const c7 = sin(c6);
     Scalar const c8 = c5 * c7;
-    Scalar const c9 = pow(c3, -3.0L / 2.0L);
+    Scalar const c9 = pow(c3, Scalar(-3.0L) / Scalar(2.0L));
     Scalar const c10 = c7 * c9;
     Scalar const c11 = Scalar(1.0) / c3;
     Scalar const c12 = cos(c6);
@@ -607,13 +607,13 @@ class SE3 : public SE3Base<SE3<Scalar_, Options>> {
     Scalar const c35 = c34 * omega[1];
     Scalar const c36 = c32 * omega[1];
     Scalar const c37 = c34 * omega[2];
-    Scalar const c38 = pow(c3, -5.0L / 2.0L);
+    Scalar const c38 = pow(c3, Scalar(-5.0L) / Scalar(2.0L));
     Scalar const c39 = Scalar(3) * c28 * c38 * omega[0];
     Scalar const c40 = c26 * c9;
     Scalar const c41 = -c20 * c30 + c20;
     Scalar const c42 = c27 * c9 * omega[0];
     Scalar const c43 = c42 * omega[1];
-    Scalar const c44 = pow(c3, -2);
+    Scalar const c44 = pow(c3, Scalar(-2));
     Scalar const c45 = Scalar(2) * c31 * c44 * omega[0];
     Scalar const c46 = c45 * omega[1];
     Scalar const c47 = c29 * omega[2];
@@ -763,8 +763,8 @@ class SE3 : public SE3Base<SE3<Scalar_, Options>> {
   // of SE(3), see below.
   //
   SOPHUS_FUNC static SE3<Scalar> exp(Tangent const& a) {
-    using std::cos;
-    using std::sin;
+    using Eigen::numext::cos;
+    using Eigen::numext::sin;
     Vector3<Scalar> const omega = a.template tail<3>();
 
     Scalar theta;

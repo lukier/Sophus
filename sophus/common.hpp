@@ -144,7 +144,7 @@ struct Constants {
   SOPHUS_FUNC static Scalar epsilon() { return Scalar(1e-10); }
 
   SOPHUS_FUNC static Scalar epsilonSqrt() {
-    using std::sqrt;
+    using Eigen::numext::sqrt;
     return sqrt(epsilon());
   }
 

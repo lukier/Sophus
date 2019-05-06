@@ -164,7 +164,7 @@ class RxSO3Base {
   // As above, but also returns ``theta = |omega|``.
   //
   SOPHUS_FUNC TangentAndTheta logAndTheta() const {
-    using std::log;
+    using Eigen::numext::log;
 
     Scalar scale = quaternion().squaredNorm();
     TangentAndTheta result;
@@ -346,7 +346,7 @@ class RxSO3Base {
   // Setter of quaternion using rotation matrix ``R``, leaves scale as is.
   //
   SOPHUS_FUNC void setRotationMatrix(Transformation const& R) {
-    using std::sqrt;
+    using Eigen::numext::sqrt;
     Scalar saved_scale = scale();
     quaternion_nonconst() = R;
     quaternion_nonconst().coeffs() *= sqrt(saved_scale);
@@ -359,7 +359,7 @@ class RxSO3Base {
   //
   SOPHUS_FUNC
   void setScale(Scalar const& scale) {
-    using std::sqrt;
+    using Eigen::numext::sqrt;
     quaternion_nonconst().normalize();
     quaternion_nonconst().coeffs() *= sqrt(scale);
   }
@@ -385,7 +385,7 @@ class RxSO3Base {
   // Setter of SO(3) rotations, leaves scale as is.
   //
   SOPHUS_FUNC void setSO3(SO3<Scalar> const& so3) {
-    using std::sqrt;
+    using Eigen::numext::sqrt;
     Scalar saved_scale = scale();
     quaternion_nonconst() = so3.unit_quaternion();
     quaternion_nonconst().coeffs() *= sqrt(saved_scale);
@@ -453,7 +453,7 @@ class RxSO3 : public RxSO3Base<RxSO3<Scalar_, Options>> {
       : quaternion_(R) {
     SOPHUS_ENSURE(scale >= Constants<Scalar>::epsilon(),
                   "Scale factor must be greater-equal epsilon.");
-    using std::sqrt;
+    using Eigen::numext::sqrt;
     quaternion_.coeffs() *= sqrt(scale);
   }
 
@@ -465,7 +465,7 @@ class RxSO3 : public RxSO3Base<RxSO3<Scalar_, Options>> {
       : quaternion_(so3.unit_quaternion()) {
     SOPHUS_ENSURE(scale >= Constants<Scalar>::epsilon(),
                   "Scale factor must be greater-equal epsilon.");
-    using std::sqrt;
+    using Eigen::numext::sqrt;
     quaternion_.coeffs() *= sqrt(scale);
   }
 
@@ -513,8 +513,8 @@ class RxSO3 : public RxSO3Base<RxSO3<Scalar_, Options>> {
   SOPHUS_FUNC static RxSO3<Scalar> expAndTheta(Tangent const& a,
                                                Scalar* theta) {
     SOPHUS_ENSURE(theta != nullptr, "must not be nullptr.");
-    using std::exp;
-    using std::sqrt;
+    using Eigen::numext::exp;
+    using Eigen::numext::sqrt;
 
     Vector3<Scalar> const omega = a.template head<3>();
     Scalar sigma = a[3];
@@ -606,7 +606,7 @@ class RxSO3 : public RxSO3Base<RxSO3<Scalar_, Options>> {
   template <class UniformRandomBitGenerator>
   static RxSO3 sampleUniform(UniformRandomBitGenerator& generator) {
     std::uniform_real_distribution<Scalar> uniform(Scalar(-1), Scalar(1));
-    using std::exp2;
+    using details::exp2;
     return RxSO3(exp2(uniform(generator)),
                  SO3<Scalar>::sampleUniform(generator));
   }
@@ -625,7 +625,7 @@ class RxSO3 : public RxSO3Base<RxSO3<Scalar_, Options>> {
   //                | -b  a  d | .
   //
   SOPHUS_FUNC static Tangent vee(Transformation const& Omega) {
-    using std::abs;
+    using Eigen::numext::abs;
     return Tangent(Omega(2, 1), Omega(0, 2), Omega(1, 0), Omega(0, 0));
   }
 

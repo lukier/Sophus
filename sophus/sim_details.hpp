@@ -9,10 +9,10 @@ namespace details {
 template <class Scalar, int N>
 Matrix<Scalar, N, N> calcW(Matrix<Scalar, N, N> const& Omega,
                            Scalar const theta, Scalar const sigma) {
-  using std::abs;
-  using std::exp;
-  using std::sin;
-  using std::cos;
+  using Eigen::numext::abs;
+  using Eigen::numext::exp;
+  using Eigen::numext::sin;
+  using Eigen::numext::cos;
   static Matrix<Scalar, N, N> const I = Matrix<Scalar, N, N>::Identity();
   static Scalar const one(1);
   static Scalar const half(0.5);
@@ -52,9 +52,9 @@ template <class Scalar, int N>
 Matrix<Scalar, N, N> calcWInv(Matrix<Scalar, N, N> const& Omega,
                               Scalar const theta, Scalar const sigma,
                               Scalar const scale) {
-  using std::abs;
-  using std::sin;
-  using std::cos;
+  using Eigen::numext::abs;
+  using Eigen::numext::sin;
+  using Eigen::numext::cos;
   static Matrix<Scalar, N, N> const I = Matrix<Scalar, N, N>::Identity();
   static Scalar const half(0.5);
   static Scalar const one(1);
